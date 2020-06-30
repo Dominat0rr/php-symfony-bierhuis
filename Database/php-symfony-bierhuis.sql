@@ -7,62 +7,67 @@ use `php-bierhuis`;
 
 drop table if exists soort;
 create table soort (
-  id int unsigned not null auto_increment primary key,
-  naam varchar(50) not null unique
+  id int auto_increment not null,
+  naam varchar(50) not null unique,
+  primary key (id)
 ) auto_increment=66;
 
 drop table if exists brouwer;
 create table brouwer (
-  id int unsigned not null auto_increment primary key,
+  id int auto_increment not null,
   naam varchar(50) not null,
   straat varchar(50) not null,
   huisnr varchar(50) not null,
   postcode smallint not null,
   gemeente varchar(50) not null,
   omzet int unsigned default nulL,
-  key Naam(naam)
+  key Naam(naam),
+  primary key (id)
 ) auto_increment=127;
 
 drop table if exists bier;
 create table bier (
-  id int unsigned not null auto_increment primary key,
+  id int auto_increment not null,
   naam varchar(100) not null,
-  brouwer_id int unsigned not null,
-  soort_id int unsigned not null,
+  brouwer_id int not null,
+  soort_id int not null,
   alcohol decimal(5,2) not null,
   prijs decimal(10,2) not null,
   besteld int(10) unsigned not null default 0,
-  constraint bierSoort foreign key (soort_id) references soort (id),
-  constraint bierBrouwer foreign key (brouwer_id) references brouwer (id)
+  primary key (id),
+  constraint FK_BIER_SOORT_ID foreign key (soort_id) references soort (id),
+  constraint FK_BIER_BROUWER_ID foreign key (brouwer_id) references brouwer (id)
 ) auto_increment=1543;
-create index idx_bierSoort on bier (soort_id);
-create index idx_bierBrouwer on bier (brouwer_id);
+create index IDX_BIER_SOORT on bier (soort_id);
+create index IDX_BIER_BROUWER on bier (brouwer_id);
 
 drop table if exists bestelbon;
 create table bestelbon (
-  id int unsigned not null auto_increment primary key,
+  id int auto_increment not null,
   naam varchar(50) not null,
   straat varchar(50) not null,
   huisnr varchar(50) not null,
   postcode smallint unsigned not null,
-  gemeente varchar(50) not null
+  gemeente varchar(50) not null,
+  primary key (id)
 );
 
+drop table if exists bestelbonlijn;
 create table bestelbonlijn (
-  bestelbon_id int unsigned not null,
-  bier_id int unsigned not null,
+  bestelbon_id int not null,
+  bier_id int not null,
   aantal int unsigned not null,
   prijs decimal(10,2) not null,
   unique key DubbeleBierenOpEenBon (bestelbon_id,bier_id) using btree,
-  constraint bestelbonlijnBestelbon foreign key (bestelbon_id) references bestelbon (id),
-  constraint bestelbonlijnBier foreign key (bier_id) references bier(id)
+  constraint FK_BESTELBONLIJN_BESTELBON_ID foreign key (bestelbon_id) references bestelbon (id),
+  constraint FK_BESTELBONLIJN_BIER_ID foreign key (bier_id) references bier (id)
 );
-create index idx_bestelbonlijnBier on bestelbonlijn (bier_id);
-create index idx_bestelbonlijnBestelbon on bestelbonlijn (bestelbon_id);
+create index IDX_BESTELBONLIJN_BIER on bestelbonlijn (bier_id);
+create index IDX_BESTELBONLIJN_BESTELBON on bestelbonlijn (bestelbon_id);
 
 drop table if exists gebruiker;
 create table gebruiker (
-    id int unsigned not null,
+    id int not null,
     voornaam varchar(50) not null,
     familienaam varchar(50) not null,
     straat varchar(50) not null,

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BrouwerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,7 +39,7 @@ class Brouwer
      * @Assert\NotNull()
      * @ORM\Column(type="string", length=50)
      */
-    private $huisNr;
+    private $huisnr;
 
     /**
      * @Assert\NotBlank()
@@ -59,6 +61,15 @@ class Brouwer
      * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=true)
      */
     private $omzet;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Bier::class, mappedBy="brouwer")
+     */
+    private $bier;
+
+    public function __construct() {
+        $this->bier = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,14 +106,14 @@ class Brouwer
 
     public function getHuisNr(): ?string
     {
-        return $this->huisNr;
+        return $this->huisnr;
     }
 
-    public function setHuisNr(string $huisNr): self
+    public function setHuisNr(string $huisnr): self
     {
-        if (empty($huisNr)) throw new \Exception("Huisnummer mag niet leeg zijn");
+        if (empty($huisnr)) throw new \Exception("Huisnummer mag niet leeg zijn");
 
-        $this->huisNr = trim($huisNr);
+        $this->huisnr = trim($huisnr);
 
         return $this;
     }
@@ -149,4 +160,42 @@ class Brouwer
 
         return $this;
     }
+
+    /**
+     * @return Collection|Bier[]
+     */
+    public function getBier(): Collection
+    {
+        return $this->bier;
+    }
+
+    public function addBier(Bier $bier): self
+    {
+        if (!$this->bier->contains($bier)) {
+            $this->bier[] = $bier;
+            $bier->setBrouwer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBier(Bier $bier): self
+    {
+        if ($this->bier->contains($bier)) {
+            $this->bier->removeElement($bier);
+            // set the owning side to null (unless already changed)
+            if ($bier->getBrouwer() === $this) {
+                $bier->setBrouwer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->naam;
+    }
+
+
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SoortRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -25,6 +27,15 @@ class Soort
      */
     private $naam;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Bier", mappedBy="soort")
+     */
+    private $bier;
+
+    public function __construct() {
+        $this->bier = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -42,5 +53,41 @@ class Soort
         $this->naam = trim($naam);
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Bier[]
+     */
+    public function getBier(): Collection
+    {
+        return $this->bier;
+    }
+
+    public function addBier(Bier $bier): self
+    {
+        if (!$this->bier->contains($bier)) {
+            $this->bier[] = $bier;
+            $bier->setSoort($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBier(Bier $bier): self
+    {
+        if ($this->bier->contains($bier)) {
+            $this->bier->removeElement($bier);
+            // set the owning side to null (unless already changed)
+            if ($bier->getSoort() === $this) {
+                $bier->setSoort(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->naam;
     }
 }

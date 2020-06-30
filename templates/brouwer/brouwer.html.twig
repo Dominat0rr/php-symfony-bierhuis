@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BierHuis | {{ brouwer.naam }}{% endblock %}
+
+{% block body %}
+
+    <h4>Bieren van brouwerij: {{ brouwer.naam }}</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Bier</td>
+            <td>Soort</td>
+            <td>Prijs</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bier in bieren %}
+            <tr>
+                <td>{{ bier.bier_naam }}</td>
+                <td>{{ bier.soort_naam }}</td>
+                <td>€{{ bier.prijs }}</td>
+                <td class="float-right"><a href="#" class="btn btn-secondary">View</a></td>
+            </tr>
+        {%  endfor %}
+        </tbody>
+    </table>
+    <hr>
+
+{% endblock %}

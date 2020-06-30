@@ -2,15 +2,20 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Bier;
 use App\Entity\Brouwer;
 use PHPUnit\Framework\TestCase;
 
 class BrouwerTest extends TestCase
 {
     protected $brouwer;
+    protected $bier;
 
     public function setUp() :void {
         $this->brouwer = new Brouwer();
+        $this->bier = new Bier();
+
+        $this->bier->setNaam("Pils");
     }
 
     // Naam
@@ -190,5 +195,22 @@ class BrouwerTest extends TestCase
         $this->expectException(\Exception::class);
 
         $this->brouwer->setOmzet(-1);
+    }
+
+
+    // Bier
+    /** @test */
+    public function testBrouwerHeeftBierInBierCollectie() {
+        $this->brouwer->addBier($this->bier);
+
+        $this->assertTrue($this->brouwer->getBier()->contains($this->bier));
+        $this->assertCount(1, $this->brouwer->getBier());
+    }
+
+    /** @test */
+    public function testSetBrouwerAlsNullThrowsException() {
+        $this->expectException(\TypeError::class);
+
+        $this->brouwer->addBier(null);
     }
 }

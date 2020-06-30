@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ path("home") }}">BierHuis</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="container-inline">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path("soorten.soorten") }}">Soorten</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path("brouwers.brouwers") }}">Brouwers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Bieren</a>
+                    </li>
+                </ul>
+            </div>
+
+    {#        <div class="navbar-nav ml-auto navbar-login-logout float-right">#}
+    {#            #}{#                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+    {#            {% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+    {#                <a class="nav-link" href="{{ path("app_logout") }}">Logout</a>#}
+    {#            {% else %}#}
+    {#                <a class="nav-link" href="{{ path("app_login") }}">Login</a>#}
+    {#            {% endif %}#}
+    {#        </div>#}
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <h1>Brouwers</h1>
+        <form action="index.php" method="GET">
+            <select name="brouwer" class="form-control">
+                <option value="0">Kies een brouwer</option>
+                {% for brouwer in brouwers  %}
+                    <option value="{{ brouwer.id }}">{{ brouwer.naam }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit" class="btn btn-lg btn-success float-right">ZOEK</button>
+        </form>
+    </div>
+
+    <div class="container">
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    </div>
+    {% block javascripts %}{% endblock %}
+
+    <footer class="footer mt-3">
+        <p class="text-center">&copy; 2020 BierHuis, Inc.</ptext-center>
+    </footer>
+</body>
 </html>

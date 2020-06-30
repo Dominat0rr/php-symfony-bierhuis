@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BierHuis | Soorten{% endblock %}
+
+{% block body %}
+    <h3>Soorten:</h3>
+
+    <table class="table table-striped">
+        <tbody>
+        {% for soort in soorten %}
+            <tr>
+                <td>{{ soort.naam }}</td>
+                <td class="float-right"><a href="{{ path("soorten.soort", {id: soort.id}) }}" class="btn btn-secondary">View</a></td>
+            </tr>
+        {%  endfor %}
+        </tbody>
+    </table>
+{% endblock %}

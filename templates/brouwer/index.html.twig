@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BierHuis | Brouwers{% endblock %}
+
+{% block body %}
+    <h3>Brouwers:</h3>
+
+    <table class="table table-striped">
+        <tbody>
+        {% for brouwer in brouwers %}
+            <tr>
+                <td>{{ brouwer.naam }}</td>
+                <td class="float-right"><a href="{{ path("brouwers.brouwer", {id: brouwer.id}) }}" class="btn btn-secondary">View</a></td>
+            </tr>
+        {%  endfor %}
+        </tbody>
+    </table>
+{% endblock %}
