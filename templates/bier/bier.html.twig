@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BierHuis | {{ bier.naam }}{% endblock %}
+
+{% block body %}
+
+    <h4>{{ bier.naam }}</h4>
+    <dl>
+        <dt>Naam:</dt>
+        <dd>{{ bier.naam }}</dd>
+        <dt>Brouwer:</dt>
+        <dd>{{ bier.brouwer.naam }}</dd>
+        <dt>Soort:</dt>
+        <dd>{{ bier.soort.naam }}</dd>
+        <dt>Alcohol:</dt>
+        <dd>{{ bier.alcohol }}</dd>
+        <dt>Prijs:</dt>
+        <dd>€{{ bier.prijs }}</dd>
+    </dl>
+
+    <form action="#" method="POST">
+        <input type="hidden" name="bierId" value="{{ bier.id }}">
+        <div class="form-group">
+            <label>Aantal</label>
+            <input type="number" class="form-control" name="aantal" style="width:200px;">
+        </div>
+        <button type="submit" class="btn btn-primary" name="submit">Toevoegen</button>
+    </form>
+    <hr>
+
+{% endblock %}
