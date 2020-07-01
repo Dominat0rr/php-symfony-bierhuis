@@ -36,7 +36,8 @@ class BrouwerController extends AbstractController
      */
     public function brouwer(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Brouwer $brouwer) {
         $brouwers = $brouwerRepository->findAll();
-        $bieren = $bierRepository->findByBrouwer($brouwer->getId());
+        //$bieren = $bierRepository->findByBrouwer($brouwer->getId());
+        $bieren = $brouwer->getBier()->getValues();
 
         return $this->render("brouwer/brouwer.html.twig", [
             "brouwers" => $brouwers,

@@ -39,7 +39,8 @@ class SoortController extends AbstractController
      */
     public function soort(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Soort $soort) {
         $brouwers = $brouwerRepository->findAll();
-        $bieren = $bierRepository->findBySoort($soort->getId());
+        //$bieren = $bierRepository->findBySoort($soort->getId());
+        $bieren = $soort->getBier()->getValues();
 
         return $this->render("soort/soort.html.twig", [
             "brouwers" => $brouwers,

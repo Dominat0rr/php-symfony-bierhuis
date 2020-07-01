@@ -17,8 +17,9 @@
         <tbody>
         {% for bier in bieren %}
             <tr>
-                <td>{{ bier.bier_naam }}</td>
-                <td>{{ bier.brouwer_naam }}</td>
+{#                <td>{{ bier.bier_naam }}</td>#}
+                <td>{{ bier.naam }}</td>
+                <td>{{ bier.brouwer.naam }}</td>
                 <td>€{{ bier.prijs }}</td>
                 <td class="float-right"><a href="#" class="btn btn-secondary">View</a></td>
             </tr>
