@@ -48,6 +48,7 @@ create table bestelbon (
   gemeente varchar(50) not null
 );
 
+drop table if exists bestelbonlijn;
 create table bestelbonlijn (
   bestelbon_id int unsigned not null,
   bier_id int unsigned not null,

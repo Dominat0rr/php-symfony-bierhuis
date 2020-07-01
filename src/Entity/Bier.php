@@ -62,6 +62,8 @@ class Bier
      */
     private $besteld = 0;
 
+    private $aantal = 0;
+
     public function __construct()
     {
         $this->brouwer = new ArrayCollection();
@@ -155,6 +157,22 @@ class Bier
         $this->besteld = $besteld;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAantal(): int
+    {
+        return $this->aantal;
+    }
+
+    /**
+     * @param int $aantal
+     */
+    public function setAantal(int $aantal): void
+    {
+        $this->aantal = $aantal;
     }
 
     public function __toString()

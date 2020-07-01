@@ -13,19 +13,12 @@
         <dt>Soort:</dt>
         <dd><a href={{ path("soorten.soort", {id: bier.soort.id}) }}>{{ bier.soort.naam }}</a></dd>
         <dt>Alcohol:</dt>
-        <dd>{{ bier.alcohol }}</dd>
+        <dd>{{ bier.alcohol | number_format(2, ',', '.') }}%</dd>
         <dt>Prijs:</dt>
-        <dd>€{{ bier.prijs }}</dd>
+        <dd>€{{ bier.prijs | number_format(2, ',', '.') }}</dd>
     </dl>
 
-    <form action="#" method="POST">
-        <input type="hidden" name="bierId" value="{{ bier.id }}">
-        <div class="form-group">
-            <label>Aantal</label>
-            <input type="number" class="form-control" name="aantal" style="width:200px;">
-        </div>
-        <button type="submit" class="btn btn-primary" name="submit">Toevoegen</button>
-    </form>
+        {{ form(form) }}
     <hr>
 
 {% endblock %}

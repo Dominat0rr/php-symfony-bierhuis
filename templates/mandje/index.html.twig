@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BierHuis | Mandje{% endblock %}
+
+{% block body %}
+    {%  for message in app.flashes("succes") %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {%  endfor %}
+
+    {% if bieren == null %}
+        <h3>Je mandje is momenteel leeg</h3>
+    {% else %}
+        <table class="table table-striped" style="width: 80%;">
+            <thead>
+            <tr>
+                <th style="width: 60%;">Bier</th>
+                <th>Prijs</th>
+                <th>Aantal</th>
+                <th>Te betalen</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set totaalbedrag = 0 %}
+            {% for bier in bieren %}
+                <tr>
+                    <td>{{ bier.naam }}</td>
+                    <td>{{ bier.prijs | number_format(2, ',', '.') }}</td>
+                    <td>{{ bier.aantal }}</td>
+                    <td>{{ (bier.prijs * bier.aantal) | number_format(2, ',', '.')}}</td>
+                </tr>
+                {% set totaalbedrag = totaalbedrag + bier.prijs * bier.aantal %}
+            {%  endfor %}
+            </tbody>
+        </table>
+
+        <h4 class='pull-right'>Totaal: €{{ totaalbedrag | number_format(2, ',', '.')}} </h4>
+    {% endif %}
+
+{% endblock %}
