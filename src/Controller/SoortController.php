@@ -32,13 +32,21 @@ class SoortController extends AbstractController
     }
 
     /**
-     * @Route("/soort/{id}", name="soort")
+     * @Route("/soort/{id}", defaults={"id"=null}, name="soort")
      * @param BrouwerRepository $brouwerRepository
      * @param Soort $soort
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function soort(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Soort $soort) {
+    public function soort(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Soort $soort = null) {
         $brouwers = $brouwerRepository->findAll();
+
+        if ($soort === null) {
+            return $this->render("soort/soort.html.twig", [
+                "brouwers" => $brouwers,
+                "soort" => $soort
+            ]);
+        }
+
         //$bieren = $bierRepository->findBySoort($soort->getId());
         $bieren = $soort->getBier()->getValues();
 

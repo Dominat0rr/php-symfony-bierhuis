@@ -1,32 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BierHuis | {{ brouwer.naam }}{% endblock %}
+{% block title %}{{ brouwer ? "BierHuis | " ~ brouwer.naam : "BierHuis" }}{% endblock %}
 
 {% block body %}
 
-    <h4>Bieren van brouwerij: {{ brouwer.naam }}</h4>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <td>Bier</td>
-            <td>Soort</td>
-            <td>Prijs</td>
-            <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for bier in bieren %}
+    {% if brouwer is null %}
+        <h4>Geen brouwer gevonden</h4>
+    {% else %}
+        <h4>Bieren van brouwerij: {{ brouwer.naam }}</h4>
+        <table class="table table-striped">
+            <thead>
             <tr>
-{#                <td>{{ bier.bier_naam }}</td>#}
-{#                <td>{{ bier.soort_naam }}</td>#}
-                <td>{{ bier.naam }}</td>
-                <td>{{ bier.soort.naam }}</td>
-                <td>€{{ bier.prijs }}</td>
-                <td class="float-right"><a href="#" class="btn btn-secondary">View</a></td>
+                <td>Bier</td>
+                <td>Soort</td>
+                <td>Prijs</td>
+                <td></td>
             </tr>
-        {%  endfor %}
-        </tbody>
-    </table>
-    <hr>
+            </thead>
+            <tbody>
+            {% for bier in bieren %}
+                <tr>
+    {#                <td>{{ bier.bier_naam }}</td>#}
+    {#                <td>{{ bier.soort_naam }}</td>#}
+                    <td>{{ bier.naam }}</td>
+                    <td>{{ bier.soort.naam }}</td>
+                    <td>€{{ bier.prijs }}</td>
+                    <td class="float-right"><a href="#" class="btn btn-secondary">View</a></td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
 {% endblock %}

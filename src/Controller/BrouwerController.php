@@ -28,15 +28,23 @@ class BrouwerController extends AbstractController
     }
 
     /**
-     * @Route("/brouwer/{id}", name="brouwer")
+     * @Route("/brouwer/{id}", defaults={"id"=null}, name="brouwer")
      * @param BrouwerRepository $brouwerRepository
      * @param BierRepository $bierRepository
      * @param Brouwer $brouwer
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function brouwer(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Brouwer $brouwer) {
+    public function brouwer(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Brouwer $brouwer = null) {
         $brouwers = $brouwerRepository->findAll();
         //$bieren = $bierRepository->findByBrouwer($brouwer->getId());
+
+        if ($brouwer === null) {
+            return $this->render("brouwer/brouwer.html.twig", [
+                "brouwers" => $brouwers,
+                "brouwer" => $brouwer
+            ]);
+        }
+
         $bieren = $brouwer->getBier()->getValues();
 
         return $this->render("brouwer/brouwer.html.twig", [

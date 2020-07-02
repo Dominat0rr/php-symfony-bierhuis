@@ -9,6 +9,13 @@
         </div>
     {%  endfor %}
 
+    {%  for message in app.flashes("error") %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {%  endfor %}
+
+
     {% if bieren == null %}
         <h3>Je mandje is momenteel leeg</h3>
     {% else %}
@@ -26,7 +33,7 @@
             {% set totaalbedrag = 0 %}
             {% for bier in bieren %}
                 <tr>
-                    <td>{{ bier.naam }}</td>
+                    <td><a class="btn btn-default" href={{ path("bieren.bier", {id: bier.id}) }}>{{ bier.naam }}</a></td>
                     <td>{{ bier.prijs | number_format(2, ',', '.') }}</td>
                     <td>{{ bier.aantal }}</td>
                     <td>{{ (bier.prijs * bier.aantal) | number_format(2, ',', '.')}}</td>

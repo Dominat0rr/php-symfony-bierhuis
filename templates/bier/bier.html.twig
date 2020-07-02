@@ -1,24 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BierHuis | {{ bier.naam }}{% endblock %}
+    {% block title %}
+        {{ bier ? "BierHuis | " ~ bier.naam : "BierHuis" }}
+{#        {% if bier is null %}#}
+{#            BierHuis#}
+{#        {%  else %}#}
+{#            BierHuis | {{ bier.naam }}#}
+{#        {% endif %}#}
+    {% endblock %}
 
 {% block body %}
+    {%  for message in app.flashes("error") %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {%  endfor %}
 
-    <h4>{{ bier.naam }}</h4>
-    <dl>
-        <dt>Naam:</dt>
-        <dd>{{ bier.naam }}</dd>
-        <dt>Brouwer:</dt>
-        <dd><a href="{{ path("brouwers.brouwer", {id: bier.brouwer.id}) }}">{{ bier.brouwer.naam }}</a></dd>
-        <dt>Soort:</dt>
-        <dd><a href={{ path("soorten.soort", {id: bier.soort.id}) }}>{{ bier.soort.naam }}</a></dd>
-        <dt>Alcohol:</dt>
-        <dd>{{ bier.alcohol | number_format(2, ',', '.') }}%</dd>
-        <dt>Prijs:</dt>
-        <dd>€{{ bier.prijs | number_format(2, ',', '.') }}</dd>
-    </dl>
+    {% if bier is null %}
+        <h4>Geen bier gevonden</h4>
+    {% else %}
+        <h4>{{ bier.naam }}</h4>
+        <dl>
+            <dt>Naam:</dt>
+            <dd>{{ bier.naam }}</dd>
+            <dt>Brouwer:</dt>
+            <dd><a href="{{ path("brouwers.brouwer", {id: bier.brouwer.id}) }}">{{ bier.brouwer.naam }}</a></dd>
+            <dt>Soort:</dt>
+            <dd><a href={{ path("soorten.soort", {id: bier.soort.id}) }}>{{ bier.soort.naam }}</a></dd>
+            <dt>Alcohol:</dt>
+            <dd>{{ bier.alcohol | number_format(2, ',', '.') }}%</dd>
+            <dt>Prijs:</dt>
+            <dd>€{{ bier.prijs | number_format(2, ',', '.') }}</dd>
+        </dl>
 
-        {{ form(form) }}
-    <hr>
+        {{ form_start(form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <strong>{{ form_label(form.aantal) }}:</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.aantal) }}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                {{ form_row(form.Toevoegen) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    {%  endif %}
 
 {% endblock %}

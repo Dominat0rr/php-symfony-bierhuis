@@ -22,7 +22,7 @@ class BierAantalFormType extends AbstractType
             ->add("aantal", IntegerType::class)
             ->add("Toevoegen", SubmitType::class, [
                 "attr" => [
-                    "class" => "btn btn-primary float-right"
+                    "class" => "btn btn-primary float-left"
                 ]
             ]);
         ;

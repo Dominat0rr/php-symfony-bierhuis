@@ -33,19 +33,31 @@ class BierController extends AbstractController
     }
 
     /**
-     * @Route("/bier/{id}", name="bier")
+     * @Route("/bier/{id}", defaults={"id"=null}, name="bier")
      * @param Request $request
      * @param BrouwerRepository $brouwerRepository
      * @param Bier $bier
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function bier(Request $request, BrouwerRepository $brouwerRepository, Bier $bier) {
+    public function bier(Request $request, BrouwerRepository $brouwerRepository, Bier $bier = null) {
         $brouwers = $brouwerRepository->findAll();
+
+        if ($bier === null) {
+            return $this->render("bier/bier.html.twig", [
+                "brouwers" => $brouwers,
+                "bier" => $bier
+            ]);
+        }
 
         $form = $this->createForm(BierAantalFormType::class, $bier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            if ((int)$request->get("bier_aantal_form")["aantal"] <= 0) {
+                $this->addFlash("error", "Gelieve een geldig aantal in te voeren");
+                return $this->redirect($this->generateUrl("bieren.bier", array("id" => $bier->getId())));
+            }
+
             //$bier_mandje = array($request->attributes->get("id") => $request->get("bier_aantal_form")["aantal"]);
             $session = $request->getSession();
             $cartElements = $session->get("cart");
