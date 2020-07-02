@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BierHuis | Registratie{% endblock %}
+
+{% block body %}
+    {%  for message in app.flashes("succes") %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {%  endfor %}
+
+    {%  for message in app.flashes("error") %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {%  endfor %}
+
+    <h4 class="mt-5 text-center">Account aanmaken</h4>
+    <div class="form form-registratie">
+    {{ form_start(form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.voornaam) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.voornaam) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.familienaam) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.familienaam) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.straat) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.straat) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.huisnr) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.huisnr) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.postcode) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.postcode) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.gemeente) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.gemeente) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.gebruikersnaam) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.gebruikersnaam) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.password) }}:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+{#                {{ form_widget(form.password.first) }}#}
+                {{ form_widget(form.password.first, { 'attr': {'class': 'form-control', 'placeholder': 'Geef je wachtwoord in', 'value':''}  }) }}
+                {{ form_widget(form.password.second, { 'attr': {'class': 'form-control repeat-password', 'placeholder': 'Herhaal je wachtwoord', 'value':''}  }) }}
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                {{ form_row(form.Registreer) }}
+            </div>
+        </div>
+    {{ form_end(form) }}
+    </div>
+
+{% endblock %}

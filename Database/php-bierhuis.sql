@@ -63,12 +63,12 @@ create index idx_bestelbonlijnBestelbon on bestelbonlijn (bestelbon_id);
 
 drop table if exists gebruiker;
 create table gebruiker (
-    id int unsigned not null,
+    id int unsigned auto_increment not null,
     voornaam varchar(50) not null,
     familienaam varchar(50) not null,
     straat varchar(50) not null,
     huisnr varchar(50) not null,
-    postcode varchar(50) not null,
+    postcode smallint not null,
     gemeente varchar(50) not null,
     gebruikersnaam varchar(50) not null,
     password varchar(100) not null,

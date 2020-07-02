@@ -65,6 +65,27 @@ li {
     margin-bottom: 1.5rem;
 }
 
+.form-registratie {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+    margin-top: 1rem !important;
+}
+
+.form-registratie input {
+    width: 450px;
+}
+
+.form-registratie label {
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.repeat-password {
+    margin-top: 1rem;
+}
+
 /*.footer {*/
 /*    display: flex !important;*/
 /*    justify-content: center;*/
