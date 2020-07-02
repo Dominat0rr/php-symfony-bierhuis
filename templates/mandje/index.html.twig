@@ -16,8 +16,10 @@
     {%  endfor %}
 
 
-    {% if bieren == null %}
-        <h3 class="mt-5">Je mandje is momenteel leeg</h3>
+    {% if bieren is not defined %}
+        <h3 class="text-center mt-5">Je mandje is momenteel leeg</h3>
+    {% elseif bieren == null %}
+        <h3 class="text-center mt-5">Je mandje is momenteel leeg</h3>
     {% else %}
         <div class="mandje">
         <h3 class="mt-5">Mandje</h3>

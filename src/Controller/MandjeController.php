@@ -26,6 +26,10 @@ class MandjeController extends AbstractController
         //$session->set("cart", $bieren_mandje);
         $bieren_mandje = $session->get("cart");
 
+        if ($bieren_mandje === null) {
+            return $this->render('mandje/index.html.twig');
+        }
+
         foreach ($bieren_mandje as $key => $value) {
             $id = $key;
             $aantal = $value;
