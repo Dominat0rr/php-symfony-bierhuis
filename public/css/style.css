@@ -1,0 +1,72 @@
+.jumbotron h1, .jumbotron h2, .jumbotron h3, .jumbotron h4, .jumbotron h5, .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-flags {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    float: left;
+}
+
+.menu-flags li {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.menu-flags li img {
+    width: 3rem;
+}
+
+.form > .btn {
+    margin-left: 1rem;
+}
+
+.title {
+    margin-bottom: 2rem;
+}
+
+.row.marketing {
+    border-bottom: solid 2px #e9ecef;
+    margin-bottom: 1rem;
+}
+
+.links-first {
+    margin-right: 1rem;
+}
+
+.links-last {
+    margin-left: 1rem;
+}
+
+.btn-login {
+    margin-right: 0.5rem;
+}
+
+.login-form,
+.login-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.login-title {
+    margin-bottom: 1.5rem;
+}
+
+/*.footer {*/
+/*    display: flex !important;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/

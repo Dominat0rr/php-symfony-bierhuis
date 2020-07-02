@@ -71,7 +71,8 @@ create table gebruiker (
     postcode varchar(50) not null,
     gemeente varchar(50) not null,
     gebruikersnaam varchar(50) not null,
-    paswoord varchar(100) not null,
+    password varchar(100) not null,
+    roles json not null,
     primary key (id)
 );
 
@@ -1426,9 +1427,9 @@ insert into `bier` (`id`,`naam`,`brouwer_id`,`soort_id`,`alcohol`,`prijs`) value
  (1541,'Zwijntje (=Augustijn)',14,15,8,24),
  (1542,'Zwintje',74,6,6,20);
 
-insert into gebruiker(id, voornaam, familienaam, straat, huisnr, postcode, gemeente, gebruikersnaam, paswoord) values
-  (1, "Dirk", "Dirkjan", "testStraat", "451", "2610", "test", "dirkske", "$2a$10$QLStSQ.UjNtsX6vV9qc6TOkuCnL8zTNtTdmxummccxP5.KI81yEPi"),
-  (2, "Domi", "Domi", "straatnaam", "154", "2000", "test", "dominik", "$2a$10$RED4gbHCWgVLPP54s6w0AuwvPBrq9jDBCVsZsQUyOuPN8b2wjes3G");
+insert into gebruiker(id, voornaam, familienaam, straat, huisnr, postcode, gemeente, gebruikersnaam, password, roles) values
+  (1, "Dirk", "Dirkjan", "testStraat", "451", "2610", "test", "dirkske", "$2a$10$QLStSQ.UjNtsX6vV9qc6TOkuCnL8zTNtTdmxummccxP5.KI81yEPi", "[]"),
+  (2, "Domi", "Domi", "straatnaam", "154", "2000", "test", "dominik", "$2a$10$RED4gbHCWgVLPP54s6w0AuwvPBrq9jDBCVsZsQUyOuPN8b2wjes3G", "[]");
 
 
 -- user; create and grant rules

@@ -2,8 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}BierHuis{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href={{ asset("css/style.css") }}>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
@@ -31,29 +32,30 @@
                 </ul>
             </div>
 
-    {#        <div class="navbar-nav ml-auto navbar-login-logout float-right">#}
-    {#            #}{#                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
-    {#            {% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
-    {#                <a class="nav-link" href="{{ path("app_logout") }}">Logout</a>#}
-    {#            {% else %}#}
-    {#                <a class="nav-link" href="{{ path("app_login") }}">Login</a>#}
-    {#            {% endif %}#}
-    {#        </div>#}
+            <div class="navbar-nav ml-auto navbar-login-logout float-right">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a class="nav-link" href="{{ path("app_logout") }}">Logout</a>
+                {% else %}
+                    <a class="nav-link" href="{{ path("app_login") }}">Login</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
-    <div class="jumbotron">
-        <h1>Brouwers</h1>
-        <form action="#" method="GET">
-            <select name="brouwer" class="form-control">
-                <option value="0">Kies een brouwer</option>
-                {% for brouwer in brouwers  %}
-                    <option value="{{ brouwer.id }}">{{ brouwer.naam }}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <button type="submit" class="btn btn-lg btn-success float-right">ZOEK</button>
-        </form>
-    </div>
+    {% if brouwers is defined %}
+        <div class="jumbotron">
+            <h1>Brouwers</h1>
+            <form action="#" method="GET">
+                <select name="brouwer" class="form-control">
+                    <option value="0">Kies een brouwer</option>
+                    {% for brouwer in brouwers  %}
+                        <option value="{{ brouwer.id }}">{{ brouwer.naam }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <button type="submit" class="btn btn-lg btn-success float-right">ZOEK</button>
+            </form>
+        </div>
+    {% endif %}
 
     <div class="container">
         {% block body %}{% endblock %}
@@ -61,7 +63,7 @@
     {% block javascripts %}{% endblock %}
 
     <br>
-    <footer class="footer mt-3">
+    <footer class="footer">
         <hr>
         <p class="text-center">&copy; 2020 BierHuis, Inc.</p>
     </footer>

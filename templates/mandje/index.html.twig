@@ -17,16 +17,17 @@
 
 
     {% if bieren == null %}
-        <h3>Je mandje is momenteel leeg</h3>
+        <h3 class="mt-5">Je mandje is momenteel leeg</h3>
     {% else %}
-        <table class="table table-striped" style="width: 80%;">
+        <div class="mandje">
+        <h3 class="mt-5">Mandje</h3>
+        <table class="table table-striped mt-5">
             <thead>
             <tr>
-                <th style="width: 60%;">Bier</th>
-                <th>Prijs</th>
-                <th>Aantal</th>
-                <th>Te betalen</th>
-                <th></th>
+                <th>Bier</th>
+                <th class="text-right">Prijs</th>
+                <th class="text-right">Aantal</th>
+                <th class="text-right">Te betalen</th>
             </tr>
             </thead>
             <tbody>
@@ -34,16 +35,17 @@
             {% for bier in bieren %}
                 <tr>
                     <td><a class="btn btn-default" href={{ path("bieren.bier", {id: bier.id}) }}>{{ bier.naam }}</a></td>
-                    <td>{{ bier.prijs | number_format(2, ',', '.') }}</td>
-                    <td>{{ bier.aantal }}</td>
-                    <td>{{ (bier.prijs * bier.aantal) | number_format(2, ',', '.')}}</td>
+                    <td class="text-right">€{{ bier.prijs | number_format(2, ',', '.') }}</td>
+                    <td class="text-right">{{ bier.aantal }}</td>
+                    <td class="text-right">€{{ (bier.prijs * bier.aantal) | number_format(2, ',', '.')}}</td>
                 </tr>
                 {% set totaalbedrag = totaalbedrag + bier.prijs * bier.aantal %}
             {%  endfor %}
             </tbody>
         </table>
 
-        <h4 class='pull-right'>Totaal: €{{ totaalbedrag | number_format(2, ',', '.')}} </h4>
+        <h4 class="text-right">Totaal: €{{ totaalbedrag | number_format(2, ',', '.')}} </h4>
+        </div>
     {% endif %}
 
 {% endblock %}

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\BierRepository;
-use App\Repository\BrouwerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,15 +14,12 @@ class MandjeController extends AbstractController
 {
     /**
      * @Route("/", name="mandje")
-     * @param BrouwerRepository $brouwerRepository
      * @param BierRepository $bierRepository
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Request $request)
+    public function index(BierRepository $bierRepository, Request $request)
     {
-        $brouwers = $brouwerRepository->findAll();
-
         $bieren = [];
         //$bieren_mandje = array(4 => "2", 7 => "10");
         $session = $request->getSession();
@@ -40,7 +36,6 @@ class MandjeController extends AbstractController
         }
 
         return $this->render('mandje/index.html.twig', [
-            "brouwers" => $brouwers,
             "bieren" => $bieren
         ]);
     }
