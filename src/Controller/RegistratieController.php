@@ -7,6 +7,7 @@ use App\Form\GebruikerRegistratieFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -40,11 +41,29 @@ class RegistratieController extends AbstractController
             $em->persist($gebruiker);
             $em->flush();
 
-            return $this->redirect($this->generateUrl("app_login"));
+            //return $this->redirect($this->generateUrl("app_login"));
+            //return $this->redirect($this->generateUrl("home.index"));
+
+            $this->loginUser($request, $gebruiker);
+            return $this->redirect($this->generateUrl("home"));
         }
 
         return $this->render('registratie/index.html.twig', [
             "form" => $form->createView()
         ]);
+    }
+
+    private function loginUser(Request $request, Gebruiker $gebruiker) : void
+    {
+        $token = new UsernamePasswordToken(
+            $gebruiker,
+            $gebruiker->getPassword(),
+            'main',
+            $gebruiker->getRoles()
+        );
+
+        $this->get('security.token_storage')->setToken($token);
+        $this->get('session')->set('_security_main', serialize($token));
+        $this->addFlash('success', 'You are now successfully registered!');
     }
 }
