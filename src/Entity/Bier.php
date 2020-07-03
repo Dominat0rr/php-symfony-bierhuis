@@ -159,17 +159,11 @@ class Bier
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getAantal(): int
     {
         return $this->aantal;
     }
 
-    /**
-     * @param int $aantal
-     */
     public function setAantal(int $aantal): void
     {
         $this->aantal = $aantal;

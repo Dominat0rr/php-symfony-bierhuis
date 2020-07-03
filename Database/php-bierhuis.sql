@@ -50,6 +50,7 @@ create table bestelbon (
 
 drop table if exists bestelbonlijn;
 create table bestelbonlijn (
+  id int unsigned not null auto_increment primary key,
   bestelbon_id int unsigned not null,
   bier_id int unsigned not null,
   aantal int unsigned not null,

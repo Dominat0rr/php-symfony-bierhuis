@@ -3,6 +3,11 @@
 {% block title %}BierHuis | Home{% endblock %}
 
 {% block body %}
+    {%  for message in app.flashes("succes") %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {%  endfor %}
 
     <h4 class="text-center">We hebben momenteel {{ aantalBieren }} aantal bieren!</h4>
 
