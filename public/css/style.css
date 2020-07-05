@@ -43,6 +43,7 @@ li {
 
 .links-active {
     cursor: default !important;
+    color: white !important;
 }
 
 .pagination {

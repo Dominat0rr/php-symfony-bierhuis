@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Bier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,6 +20,21 @@ class BierRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Bier::class);
+    }
+
+    public function getAantal() {
+//        $qb = $this->createQueryBuilder("b");
+//        $qb->select($qb->expr()->count("b"));
+//        //$query = $qb->getQuery();
+//        return $qb->getQuery()->getSingleScalarResult();
+
+        $qb = $this->createQueryBuilder("b");
+            $qb->select($qb->expr()->count("b.id"));
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
     }
 
     public function findBySoort(int $id) {
