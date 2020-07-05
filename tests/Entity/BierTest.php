@@ -20,8 +20,6 @@ class BierTest extends TestCase
 
         $this->soort->setNaam("Alcoholarm");
         $this->brouwer->setNaam("Roman");
-//        $this->bier->setSoort($this->soort);
-//        $this->bier->setBrouwer($this->brouwer);
         $this->soort->addBier($this->bier);
         $this->brouwer->addBier($this->bier);
     }

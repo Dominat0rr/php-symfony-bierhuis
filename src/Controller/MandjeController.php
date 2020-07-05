@@ -8,6 +8,7 @@ use App\Form\PlaatsBestellingFormType;
 use App\Repository\BierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
@@ -21,7 +22,7 @@ class MandjeController extends AbstractController
      * @param BierRepository $bierRepository
      * @param Request $request
      * @param Security $security
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(BierRepository $bierRepository, Request $request, Security $security)
     {

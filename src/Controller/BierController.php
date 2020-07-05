@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * @Route("/bieren", name="bieren.")
@@ -19,7 +18,6 @@ class BierController extends AbstractController
 {
     /**
      * @Route("/", name="bieren")
-     * @Method({"GET"})
      * @param BrouwerRepository $brouwerRepository
      * @param BierRepository $bierRepository
      * @param Request $request

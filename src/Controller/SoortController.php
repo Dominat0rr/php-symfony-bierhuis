@@ -7,6 +7,7 @@ use App\Repository\BierRepository;
 use App\Repository\BrouwerRepository;
 use App\Repository\SoortRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,7 +19,7 @@ class SoortController extends AbstractController
      * @Route("/", name="soorten")
      * @param BrouwerRepository $brouwerRepository
      * @param SoortRepository $soortRepository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(BrouwerRepository $brouwerRepository, SoortRepository $soortRepository)
     {
@@ -35,7 +36,7 @@ class SoortController extends AbstractController
      * @Route("/soort/{id}", defaults={"id"=null}, name="soort")
      * @param BrouwerRepository $brouwerRepository
      * @param Soort $soort
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function soort(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Soort $soort = null) {
         $brouwers = $brouwerRepository->findAll();
