@@ -8,7 +8,9 @@ use App\Repository\BierRepository;
 use App\Repository\BrouwerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * @Route("/bieren", name="bieren.")
@@ -17,18 +19,27 @@ class BierController extends AbstractController
 {
     /**
      * @Route("/", name="bieren")
+     * @Method({"GET"})
      * @param BrouwerRepository $brouwerRepository
      * @param BierRepository $bierRepository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @return Response
      */
-    public function index(BrouwerRepository $brouwerRepository, BierRepository $bierRepository)
+    public function index(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Request $request)
     {
         $brouwers = $brouwerRepository->findAll();
-        $bieren = $bierRepository->findAll();
+        //$bieren = $bierRepository->findAll();
+        $page = ($request->query->get('page') != null && $request->query->get('page') != 0) ? $request->query->get('page') : 1;
+        $limit = 20;
+        $offset = ($page - 1)  * $limit;
+        $bieren = $bierRepository->findPaginated($limit, $offset);
+        $aantalPaginas = (1186 % $limit == 0) ? roudn(1186 / $limit, 0) : round(1186 / $limit, 0) + 1;
 
         return $this->render('bier/index.html.twig', [
             "brouwers" => $brouwers,
-            "bieren" => $bieren
+            "bieren" => $bieren,
+            "aantalPaginas" => $aantalPaginas,
+            "page" => $page
         ]);
     }
 
@@ -37,7 +48,7 @@ class BierController extends AbstractController
      * @param Request $request
      * @param BrouwerRepository $brouwerRepository
      * @param Bier $bier
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function bier(Request $request, BrouwerRepository $brouwerRepository, Bier $bier = null) {
         $brouwers = $brouwerRepository->findAll();

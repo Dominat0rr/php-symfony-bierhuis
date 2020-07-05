@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Bier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -51,6 +52,21 @@ class BierRepository extends ServiceEntityRepository
             ->setParameter("id", $id);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int         $limit
+     * @param int         $offset
+     *
+     * @returns array
+     */
+    public function findPaginated($limit, $offset)
+    {
+        $qb = $this->createQueryBuilder('b');
+
+        $qb->setMaxResults($limit)->setFirstResult($offset);
+
+        return $qb->getQuery()->getResult(Query::HYDRATE_SIMPLEOBJECT);
     }
 
     // /**

@@ -64,10 +64,6 @@ class MandjeController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Security $security
-     * @param array $bieren
-     */
     public function plaatsBestelling(array $bieren, Security $security) {
         $gebruiker = $security->getUser(); // null or UserInterface, if logged in
         $bestelbon = new Bestelbon();

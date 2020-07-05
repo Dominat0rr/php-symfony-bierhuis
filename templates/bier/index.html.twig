@@ -16,4 +16,30 @@
         {%  endfor %}
         </tbody>
     </table>
+
+    <div class="pagination">
+        {% if page != 1 %}
+            <a class="btn btn-secondary links-first" href="{{ path("bieren.bieren", {page: 1}) }}">{{ 1 }}</a>
+        {% endif %}
+
+        {% set pagina = page %}
+
+        {% if pagina < 5 %}
+            {% set pagina = 6 %}
+        {%  elseif pagina >= aantalPaginas %}
+            {% set pagina = aantalPaginas - 5 %}
+        {% endif %}
+
+        {% for i in pagina - 5..pagina + 5 %}
+            {% if i == page %}
+                <a class="btn btn-secondary links-active">{{ i }}</a>
+            {% else %}
+                <a class="btn btn-primary links" href="{{ path("bieren.bieren", {page: i}) }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page != aantalPaginas %}
+            <a class="btn btn-secondary links-last" href="{{ path("bieren.bieren", {page: aantalPaginas}) }}">{{ aantalPaginas }}</a>
+        {% endif %}
+    </div>
 {% endblock %}

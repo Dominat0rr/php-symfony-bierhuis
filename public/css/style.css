@@ -41,12 +41,18 @@ li {
     margin-bottom: 1rem;
 }
 
-.links-first {
-    margin-right: 1rem;
+.links-active {
+    cursor: default !important;
 }
 
-.links-last {
-    margin-left: 1rem;
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination > a {
+    margin-left: 0.5rem;
 }
 
 .btn-login {
