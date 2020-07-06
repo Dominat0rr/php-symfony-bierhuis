@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Bestelbon;
 use App\Entity\Bestelbonlijn;
 use App\Form\PlaatsBestellingFormType;
-use App\Repository\BierRepository;
+use App\Service\BestelbonlijnService;
+use App\Service\BestelbonService;
+use App\Service\BierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,14 +19,29 @@ use Symfony\Component\Security\Core\Security;
  */
 class MandjeController extends AbstractController
 {
+    private $bierService;
+    private $bestelbonService;
+    private $bestelbonlijnService;
+
+    /**
+     * MandjeController constructor.
+     * @param BierService $bierService
+     * @param BestelbonService $bestelbonService
+     * @param BestelbonlijnService $bestelbonlijnService
+     */
+    public function __construct(BierService $bierService, BestelbonService $bestelbonService, BestelbonlijnService $bestelbonlijnService) {
+        $this->bierService = $bierService;
+        $this->bestelbonService = $bestelbonService;
+        $this->bestelbonlijnService = $bestelbonlijnService;
+    }
+
     /**
      * @Route("/", name="mandje")
-     * @param BierRepository $bierRepository
      * @param Request $request
      * @param Security $security
      * @return Response
      */
-    public function index(BierRepository $bierRepository, Request $request, Security $security)
+    public function index(Request $request, Security $security)
     {
         $form = $this->createForm(PlaatsBestellingFormType::class);
         $form->handleRequest($request);
@@ -43,7 +60,7 @@ class MandjeController extends AbstractController
             $id = $key;
             $aantal = $value;
 
-            $bier = $bierRepository->find($id);
+            $bier = $this->bierService->findById($id);
             $bier->setAantal($aantal);
             array_push($bieren, $bier);
         }
@@ -73,10 +90,7 @@ class MandjeController extends AbstractController
         $bestelbon->setHuisnr($gebruiker->getHuisnr());
         $bestelbon->setPostcode($gebruiker->getPostcode());
         $bestelbon->setGemeente($gebruiker->getGemeente());
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($bestelbon);
-        $em->flush();
+        $this->bestelbonService->save($bestelbon);
 
         foreach($bieren as $bier) {
             $this->createBestelbonLijn($bestelbon, $bier);
@@ -92,9 +106,7 @@ class MandjeController extends AbstractController
         $bestelbonlijn->setAantal($bier->getAantal());
         $bestelbonlijn->setPrijs($bier->getPrijs());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($bestelbonlijn);
-        $em->flush();
+        $this->bestelbonlijnService->save($bestelbonlijn);
 
         $this->updateBesteldAantalInBier($bier);
     }
@@ -102,8 +114,6 @@ class MandjeController extends AbstractController
     public function updateBesteldAantalInBier($bier) {
         $bier->setBesteld($bier->getBesteld() + $bier->getAantal());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($bier);
-        $em->flush();
+        $this->bierService->update($bier);
     }
 }

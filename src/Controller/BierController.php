@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Bier;
+use App\Service\BierService;
 use App\Form\BierAantalFormType;
-use App\Repository\BierRepository;
-use App\Repository\BrouwerRepository;
+use App\Service\BrouwerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,22 +16,34 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BierController extends AbstractController
 {
+    private $bierService;
+    private $brouwerService;
+
+    /**
+     * BierController constructor.
+     * @param BierService $bierService
+     * @param BrouwerService $brouwerService
+     */
+    public function __construct(BierService $bierService, BrouwerService $brouwerService) {
+        $this->bierService = $bierService;
+        $this->brouwerService = $brouwerService;
+    }
+
     /**
      * @Route("/", name="bieren")
-     * @param BrouwerRepository $brouwerRepository
-     * @param BierRepository $bierRepository
      * @param Request $request
      * @return Response
      */
-    public function index(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Request $request)
+    public function index(Request $request)
     {
-        $brouwers = $brouwerRepository->findAll();
+        $brouwers = $this->brouwerService->findAll();
         //$bieren = $bierRepository->findAll();
         $page = ($request->query->get('page') != null && $request->query->get('page') != 0) ? $request->query->get('page') : 1;
         $limit = 20;
         $offset = ($page - 1)  * $limit;
-        $bieren = $bierRepository->findPaginated($limit, $offset);
-        $aantalPaginas = (1186 % $limit == 0) ? roudn(1186 / $limit, 0) : round(1186 / $limit, 0) + 1;
+        $bieren = $this->bierService->findAllWithPagination($limit, $offset);
+        $aantalBieren = $this->bierService->getAantal();
+        $aantalPaginas = ($aantalBieren % $limit == 0) ? roudn($aantalBieren / $limit, 0) : round($aantalBieren / $limit, 0) + 1;
 
         return $this->render('bier/index.html.twig', [
             "brouwers" => $brouwers,
@@ -44,12 +56,11 @@ class BierController extends AbstractController
     /**
      * @Route("/bier/{id}", defaults={"id"=null}, name="bier")
      * @param Request $request
-     * @param BrouwerRepository $brouwerRepository
      * @param Bier $bier
      * @return Response
      */
-    public function bier(Request $request, BrouwerRepository $brouwerRepository, Bier $bier = null) {
-        $brouwers = $brouwerRepository->findAll();
+    public function bier(Request $request, Bier $bier = null) {
+        $brouwers = $this->brouwerService->findAll();
 
         if ($bier === null) {
             return $this->render("bier/bier.html.twig", [

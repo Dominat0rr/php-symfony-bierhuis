@@ -19,6 +19,17 @@ class BestelbonRepository extends ServiceEntityRepository
         parent::__construct($registry, Bestelbon::class);
     }
 
+    /**
+     * @param Bestelbon $bestelbon
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Bestelbon $bestelbon) {
+        $em = $this->getEntityManager();
+        $em->persist($bestelbon);
+        $em->flush();
+    }
+
     // /**
     //  * @return Bestelbon[] Returns an array of Bestelbon objects
     //  */

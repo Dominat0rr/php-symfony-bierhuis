@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Gebruiker;
 use App\Form\GebruikerRegistratieFormType;
+use App\Service\GebruikerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -15,11 +17,21 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class RegistratieController extends AbstractController
 {
+    private $gebruikerService;
+
+    /**
+     * RegistratieController constructor.
+     * @param GebruikerService $gebruikerService
+     */
+    public function __construct(GebruikerService $gebruikerService) {
+        $this->gebruikerService = $gebruikerService;
+    }
+
     /**
      * @Route("/", name="registratie")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function registratie(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -37,14 +49,9 @@ class RegistratieController extends AbstractController
             $gebruiker->setHuisnr($data->getHuisnr());
             $gebruiker->setPostcode($data->getPostcode());
             $gebruiker->setGemeente($data->getGemeente());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($gebruiker);
-            $em->flush();
+            $this->gebruikerService->save($gebruiker);
 
-            //return $this->redirect($this->generateUrl("app_login"));
-            //return $this->redirect($this->generateUrl("home.index"));
-
-            $this->loginUser($request, $gebruiker);
+            $this->loginUser($gebruiker);
             return $this->redirect($this->generateUrl("home"));
         }
 
@@ -53,7 +60,10 @@ class RegistratieController extends AbstractController
         ]);
     }
 
-    private function loginUser(Request $request, Gebruiker $gebruiker) : void
+    /**
+     * @param Gebruiker $gebruiker
+     */
+    private function loginUser(Gebruiker $gebruiker) : void
     {
         $token = new UsernamePasswordToken(
             $gebruiker,

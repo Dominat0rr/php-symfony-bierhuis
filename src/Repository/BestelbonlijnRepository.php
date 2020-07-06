@@ -19,6 +19,17 @@ class BestelbonlijnRepository extends ServiceEntityRepository
         parent::__construct($registry, Bestelbonlijn::class);
     }
 
+    /**
+     * @param Bestelbonlijn $bestelbonlijn
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Bestelbonlijn $bestelbonlijn) {
+        $em = $this->getEntityManager();
+        $em->persist($bestelbonlijn);
+        $em->flush();
+    }
+
     // /**
     //  * @return Bestelbonlijn[] Returns an array of Bestelbonlijn objects
     //  */

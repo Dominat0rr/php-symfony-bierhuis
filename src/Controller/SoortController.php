@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Soort;
-use App\Repository\BierRepository;
-use App\Repository\BrouwerRepository;
-use App\Repository\SoortRepository;
+use App\Service\BrouwerService;
+use App\Service\SoortService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,16 +14,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SoortController extends AbstractController
 {
+    private $soortService;
+    private $brouwerService;
+
+    /**
+     * SoortController constructor.
+     * @param SoortService $soortService
+     * @param BrouwerService $brouwerService
+     */
+    public function __construct(SoortService $soortService, BrouwerService $brouwerService) {
+        $this->soortService = $soortService;
+        $this->brouwerService = $brouwerService;
+    }
+
     /**
      * @Route("/", name="soorten")
-     * @param BrouwerRepository $brouwerRepository
-     * @param SoortRepository $soortRepository
      * @return Response
      */
-    public function index(BrouwerRepository $brouwerRepository, SoortRepository $soortRepository)
+    public function index()
     {
-        $brouwers = $brouwerRepository->findAll();
-        $soorten = $soortRepository->findAll();
+        $brouwers = $this->brouwerService->findAll();
+        $soorten = $this->soortService->findAll();
 
         return $this->render('soort/index.html.twig', [
             "brouwers" => $brouwers,
@@ -34,12 +44,11 @@ class SoortController extends AbstractController
 
     /**
      * @Route("/soort/{id}", defaults={"id"=null}, name="soort")
-     * @param BrouwerRepository $brouwerRepository
      * @param Soort $soort
      * @return Response
      */
-    public function soort(BrouwerRepository $brouwerRepository, BierRepository $bierRepository, Soort $soort = null) {
-        $brouwers = $brouwerRepository->findAll();
+    public function soort(Soort $soort = null) {
+        $brouwers = $this->soortService->findAll();
 
         if ($soort === null) {
             return $this->render("soort/soort.html.twig", [

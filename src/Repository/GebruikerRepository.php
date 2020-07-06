@@ -22,6 +22,12 @@ class GebruikerRepository extends ServiceEntityRepository implements PasswordUpg
         parent::__construct($registry, Gebruiker::class);
     }
 
+    public function save(Gebruiker $gebruiker) {
+        $em = $this->getEntityManager();
+        $em->persist($gebruiker);
+        $em->flush();
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */

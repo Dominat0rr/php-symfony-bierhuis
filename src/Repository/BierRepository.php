@@ -22,6 +22,20 @@ class BierRepository extends ServiceEntityRepository
         parent::__construct($registry, Bier::class);
     }
 
+    /**
+     * @param Bier $bier
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function update(Bier $bier) {
+        $em = $this->getEntityManager();
+        $em->persist($bier);
+        $em->flush();
+    }
+
+    /**
+     * @return int|mixed|string
+     */
     public function getAantal() {
 //        $qb = $this->createQueryBuilder("b");
 //        $qb->select($qb->expr()->count("b"));
@@ -37,6 +51,10 @@ class BierRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
     public function findBySoort(int $id) {
         $qb = $this->createQueryBuilder("b");
         $qb->select("b.naam AS bier_naam")
@@ -54,6 +72,10 @@ class BierRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
     public function findByBrouwer(int $id) {
         $qb = $this->createQueryBuilder("b");
         $qb->select("b.naam AS bier_naam")
@@ -77,7 +99,7 @@ class BierRepository extends ServiceEntityRepository
      *
      * @returns array
      */
-    public function findPaginated($limit, $offset)
+    public function findAllWithPaginated($limit, $offset)
     {
         $qb = $this->createQueryBuilder('b');
 
