@@ -6,8 +6,7 @@ use App\Entity\Bier;
 use App\Entity\Brouwer;
 use PHPUnit\Framework\TestCase;
 
-class BrouwerTest extends TestCase
-{
+class BrouwerTest extends TestCase {
     protected $brouwer;
     protected $bier;
 

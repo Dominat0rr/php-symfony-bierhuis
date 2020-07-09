@@ -7,8 +7,7 @@ use App\Entity\Brouwer;
 use App\Entity\Soort;
 use PHPUnit\Framework\TestCase;
 
-class BierTest extends TestCase
-{
+class BierTest extends TestCase {
     protected $soort;
     protected $brouwer;
     protected $bier;

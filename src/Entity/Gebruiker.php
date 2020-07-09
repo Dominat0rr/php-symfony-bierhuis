@@ -96,11 +96,9 @@ class Gebruiker implements UserInterface
 
     public function setGebruikersnaam(string $gebruikersnaam): self
     {
-//        if (empty($gebruikersnaam)) throw new \Exception();
+        if (empty($gebruikersnaam)) throw new \Exception();
 
-//        $this->gebruikersnaam = trim($gebruikersnaam);
-
-        $this->gebruikersnaam = $gebruikersnaam;
+        $this->gebruikersnaam = trim($gebruikersnaam);
 
         return $this;
     }
@@ -116,7 +114,7 @@ class Gebruiker implements UserInterface
     /**
      * @param mixed $voornaam
      */
-    public function setVoornaam($voornaam): self
+    public function setVoornaam(string $voornaam): self
     {
         if (empty($voornaam)) throw new \Exception();
 
@@ -136,7 +134,7 @@ class Gebruiker implements UserInterface
     /**
      * @param mixed $familienaam
      */
-    public function setFamilienaam($familienaam): self
+    public function setFamilienaam(string $familienaam): self
     {
         if (empty($familienaam)) throw new \Exception();
 
@@ -156,11 +154,11 @@ class Gebruiker implements UserInterface
     /**
      * @param mixed $straat
      */
-    public function setStraat($straat): self
+    public function setStraat(string $straat): self
     {
         if (empty($straat)) throw new \Exception();
 
-        $this->straat = $straat;
+        $this->straat = trim($straat);
 
         return $this;
     }
@@ -176,11 +174,11 @@ class Gebruiker implements UserInterface
     /**
      * @param mixed $huisnr
      */
-    public function setHuisnr($huisnr): self
+    public function setHuisnr(string $huisnr): self
     {
         if (empty($huisnr)) throw new \Exception();
 
-        $this->huisnr = $huisnr;
+        $this->huisnr = trim($huisnr);
 
         return $this;
     }
@@ -196,7 +194,7 @@ class Gebruiker implements UserInterface
     /**
      * @param mixed $postcode
      */
-    public function setPostcode($postcode): self
+    public function setPostcode(int $postcode): self
     {
         if ($postcode < 1000 || $postcode > 9999) throw new \Exception("Postcode moet tussen 1000 & 9999 liggen");
 
@@ -216,11 +214,11 @@ class Gebruiker implements UserInterface
     /**
      * @param mixed $gemeente
      */
-    public function setGemeente($gemeente): self
+    public function setGemeente(string $gemeente): self
     {
         if (empty($gemeente)) throw new \Exception();
 
-        $this->gemeente = $gemeente;
+        $this->gemeente = trim($gemeente);
 
         return $this;
     }
@@ -264,7 +262,9 @@ class Gebruiker implements UserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        if (empty($password)) throw new \Exception();
+
+        $this->password = trim($password);
 
         return $this;
     }

@@ -80,6 +80,8 @@ class Bestelbonlijn
 
     public function setAantal(int $aantal): void
     {
+        if ($aantal < 0) throw new \Exception("Aantal mag niet negatief zijn");
+
         $this->aantal = $aantal;
     }
 

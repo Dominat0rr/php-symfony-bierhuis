@@ -6,6 +6,7 @@ use App\Repository\BestelbonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BestelbonRepository::class)
@@ -20,26 +21,36 @@ class Bestelbon
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @ORM\Column(type="string", length=50)
      */
     private $naam;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @ORM\Column(type="string", length=50)
      */
     private $straat;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @ORM\Column(type="string", length=50)
      */
     private $huisnr;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @ORM\Column(type="smallint")
      */
     private $postcode;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @ORM\Column(type="string", length=50)
      */
     private $gemeente;
@@ -66,7 +77,9 @@ class Bestelbon
 
     public function setNaam(string $naam): self
     {
-        $this->naam = $naam;
+        if (empty($naam)) throw new \Exception();
+
+        $this->naam = trim($naam);
 
         return $this;
     }
@@ -78,7 +91,9 @@ class Bestelbon
 
     public function setStraat(string $straat): self
     {
-        $this->straat = $straat;
+        if (empty($straat)) throw new \Exception();
+
+        $this->straat = trim($straat);
 
         return $this;
     }
@@ -90,7 +105,9 @@ class Bestelbon
 
     public function setHuisnr(string $huisnr): self
     {
-        $this->huisnr = $huisnr;
+        if (empty($huisnr)) throw new \Exception();
+
+        $this->huisnr = trim($huisnr);
 
         return $this;
     }
@@ -102,6 +119,8 @@ class Bestelbon
 
     public function setPostcode(int $postcode): self
     {
+        if ($postcode < 1000 || $postcode > 9999) throw new \Exception("Postcode moet tussen 1000 & 9999 liggen");
+
         $this->postcode = $postcode;
 
         return $this;
@@ -114,7 +133,9 @@ class Bestelbon
 
     public function setGemeente(string $gemeente): self
     {
-        $this->gemeente = $gemeente;
+        if (empty($gemeente)) throw new \Exception();
+
+        $this->gemeente = trim($gemeente);
 
         return $this;
     }

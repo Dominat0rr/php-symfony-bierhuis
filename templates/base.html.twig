@@ -8,65 +8,67 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ path("home") }}">BierHuis</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="container-inline">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path("soorten.soorten") }}">Soorten</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path("brouwers.brouwers") }}">Brouwers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path("bieren.bieren") }}">Bieren</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path("mandje.mandje") }}">Mandje</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="navbar-nav ml-auto navbar-login-logout float-right">
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="btn btn-danger" href="{{ path("app_logout") }}">Logout</a>
-                {% else %}
-                    <a class="btn btn-primary" href="{{ path("app_login") }}">Aanmelden</a>
-                    <a class="ml-2 btn btn-primary" href="{{ path("registratie.registratie") }}">Registreer</a>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
-    {% if brouwers is defined %}
-        <div class="jumbotron">
-            <h1>Brouwers</h1>
-            <form action="{{ path("brouwers.brouwer") }}" method="GET">
-                <select name="id" class="form-control">
-                    <option value="0">Kies een brouwer</option>
-                    {% for brouwer in brouwers  %}
-                        <option value="{{ brouwer.id }}">{{ brouwer.naam }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-                <button type="submit" class="btn btn-lg btn-success float-right">ZOEK</button>
-            </form>
-        </div>
-    {% endif %}
-
     <div class="container">
-        {% block body %}{% endblock %}
-    </div>
-    {% block javascripts %}{% endblock %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{{ path("home") }}">BierHuis</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <br>
-    <footer class="footer">
-        <hr>
-        <p class="text-center">&copy; 2020 BierHuis, Inc.</p>
-    </footer>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="container-inline">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("soorten.soorten") }}">Soorten</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("brouwers.brouwers") }}">Brouwers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("bieren.bieren") }}">Bieren</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("mandje.mandje") }}">Mandje</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="navbar-nav ml-auto navbar-login-logout float-right">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="btn btn-danger" href="{{ path("app_logout") }}">Logout</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="{{ path("app_login") }}">Aanmelden</a>
+                        <a class="ml-2 btn btn-primary" href="{{ path("registratie.registratie") }}">Registreer</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        {% if brouwers is defined %}
+            <div class="jumbotron">
+                <h1>Brouwers</h1>
+                <form action="{{ path("brouwers.brouwer") }}" method="GET">
+                    <select name="id" class="form-control">
+                        <option value="0">Kies een brouwer</option>
+                        {% for brouwer in brouwers  %}
+                            <option value="{{ brouwer.id }}">{{ brouwer.naam }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <button type="submit" class="btn btn-lg btn-success float-right">ZOEK</button>
+                </form>
+            </div>
+        {% endif %}
+
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}{% endblock %}
+
+        <br>
+        <footer class="footer">
+            <hr>
+            <p class="text-center">&copy; 2020 BierHuis, Inc.</p>
+        </footer>
+    </div>
 </body>
 </html>
