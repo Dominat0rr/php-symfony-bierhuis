@@ -25,7 +25,7 @@
                     <td>{{ bier.naam }}</td>
                     <td>{{ bier.soort.naam }}</td>
                     <td>€{{ bier.prijs }}</td>
-                    <td class="float-right"><a href="#" class="btn btn-secondary">View</a></td>
+                    <td class="float-right"><a href="{{ path("bieren.bier", {id: bier.id}) }}" class="btn btn-secondary">View</a></td>
                 </tr>
             {%  endfor %}
             </tbody>
