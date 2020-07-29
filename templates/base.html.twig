@@ -35,7 +35,7 @@
 
                 <div class="navbar-nav ml-auto navbar-login-logout float-right">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <a class="btn btn-danger" href="{{ path("app_logout") }}">Logout</a>
+                        <a class="btn btn-danger" href="{{ path("app_logout") }}">Afmelden</a>
                     {% else %}
                         <a class="btn btn-primary" href="{{ path("app_login") }}">Aanmelden</a>
                         <a class="ml-2 btn btn-primary" href="{{ path("registratie.registratie") }}">Registreer</a>
